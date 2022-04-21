@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OpenId.Steam" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>

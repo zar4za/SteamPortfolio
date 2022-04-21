@@ -17,6 +17,7 @@ builder.Services.AddAuthentication(options =>
 .AddSteam();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -35,5 +36,8 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html"); ;
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();

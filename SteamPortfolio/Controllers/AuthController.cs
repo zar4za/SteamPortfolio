@@ -25,7 +25,9 @@ namespace SteamPortfolio.Controllers
         {
             var properties = new AuthenticationProperties
             {
-                RedirectUri = redirectUri ?? DefaultRedirectUri
+                RedirectUri = redirectUri ?? DefaultRedirectUri,
+                IsPersistent = true,
+                
             };
 
             return Challenge(properties, OpenIdProvider);

@@ -1,10 +1,8 @@
-using AspNet.Security.OpenId.Steam;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SteamPortfolio.Models;
+using SteamPortfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -14,11 +12,14 @@ builder.Services.AddAuthentication(options =>
     options.LoginPath = "/login";
     options.LogoutPath = "/signout";
 })
-.AddSteam();
-
+.AddSteam(options =>
+{
+    options.ApplicationKey = "7B27A6889F463A40D55C992FE5045C7B";
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
-
+builder.Services.Configure<MongoDbRepositorySettings>(builder.Configuration.GetSection("MongoDbRepository"));
+builder.Services.AddSingleton<IInventoryRepository, MongoDbRepository>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -30,14 +31,10 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
-
 app.MapFallbackToFile("index.html"); ;
-
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.Run();

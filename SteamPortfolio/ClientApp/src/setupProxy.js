@@ -9,7 +9,9 @@ const context =  [
     "/weatherforecast/signin",
     "/signin",
     "/identity",
-    "/swagger"
+    "/swagger",
+    "/api/v1/inventory/add-item",
+    "/api/v1/inventory"
 ];
 
 module.exports = function(app) {

@@ -34,10 +34,10 @@ namespace SteamPortfolio.Services
             return inventory;
         }
 
-        public async Task<Inventory> GetInventoryAsync(string steamId64)
+        public async Task<Inventory?> GetInventoryAsync(string steamId64)
         {
-            var inventoryCursor = await _inventoryCollection.FindAsync(i => i.SteamId64 == steamId64);
-            var inventory = await inventoryCursor.FirstOrDefaultAsync();
+            var cursor = await FindInventoryAsync(steamId64);
+            var inventory = await cursor.FirstOrDefaultAsync();
             return inventory;
         }
 
@@ -56,6 +56,17 @@ namespace SteamPortfolio.Services
             });
             var update = Builders<Inventory>.Update.Set($"{Inventory.ItemsPropertyName}.$", item);
             return await TryUpdateOneAsync(filter, update);
+        }
+
+        public async Task<bool> ContainsAsync(string steamId64)
+        {
+            var cursor = await FindInventoryAsync(steamId64);
+            return cursor.Any();
+        }
+
+        private async Task<IAsyncCursor<Inventory>?> FindInventoryAsync(string steamId64)
+        {
+            return await _inventoryCollection.FindAsync(i => i.SteamId64 == steamId64);
         }
 
         private async Task<bool> TryUpdateOneAsync(FilterDefinition<Inventory> filter, UpdateDefinition<Inventory> update)

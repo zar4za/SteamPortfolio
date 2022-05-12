@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SteamPortfolio.Models;
 using SteamPortfolio.Services;
+using SteamPortfolio.Extensions;
 
 namespace SteamPortfolio.Controllers
 {
@@ -8,13 +9,8 @@ namespace SteamPortfolio.Controllers
     [Route("api/v1/inventory")]
     public class InventoryController : ControllerBase
     {
-        private const string NameIdentifierSchema = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
-        private const string SteamOpenIdUri = "https://steamcommunity.com/openid/id/";
-
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IMarketHashNameProvider _marketHashNameProvider;
-
-        private string SteamId64 => User.Claims.First(x => x.Type == NameIdentifierSchema).Value.Replace(SteamOpenIdUri, string.Empty);
 
         public InventoryController(IInventoryRepository inventoryRepository, IMarketHashNameProvider marketHashNameProvider)
         {
@@ -28,7 +24,7 @@ namespace SteamPortfolio.Controllers
             if (User?.Identity?.IsAuthenticated == false)
                 return Unauthorized();
 
-            var inventory = await _inventoryRepository.GetInventoryAsync(SteamId64);
+            var inventory = await _inventoryRepository.GetInventoryAsync(User!.GetSteamId64()!);
             //TODO
             inventory.Prices = null!;
 
@@ -53,7 +49,7 @@ namespace SteamPortfolio.Controllers
             if (_marketHashNameProvider.ValidateName(item.MarketHashName) == false)
                 return BadRequest();
 
-            var success = await _inventoryRepository.AddItemAsync(SteamId64, item);
+            var success = await _inventoryRepository.AddItemAsync(User!.GetSteamId64()!, item);
 
             if (success)
                 return Ok();
@@ -67,7 +63,7 @@ namespace SteamPortfolio.Controllers
             if (User?.Identity?.IsAuthenticated == false)
                 return Unauthorized();
 
-            var success = await _inventoryRepository.UpdateItemAsync(SteamId64, item);
+            var success = await _inventoryRepository.UpdateItemAsync(User!.GetSteamId64()!, item);
 
             if (success)
                 return Ok();
@@ -81,7 +77,7 @@ namespace SteamPortfolio.Controllers
             if (User?.Identity?.IsAuthenticated == false)
                 return Unauthorized();
 
-            var success = await _inventoryRepository.RemoveItemAsync(SteamId64, item);
+            var success = await _inventoryRepository.RemoveItemAsync(User!.GetSteamId64()!, item);
 
             if (success)
                 return Ok();

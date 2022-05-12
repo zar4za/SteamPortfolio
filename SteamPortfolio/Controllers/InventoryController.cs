@@ -11,8 +11,8 @@ namespace SteamPortfolio.Controllers
         private const string NameIdentifierSchema = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
         private const string SteamOpenIdUri = "https://steamcommunity.com/openid/id/";
 
-        private IInventoryRepository _inventoryRepository;
-        private IMarketHashNameProvider _marketHashNameProvider;
+        private readonly IInventoryRepository _inventoryRepository;
+        private readonly IMarketHashNameProvider _marketHashNameProvider;
 
         private string SteamId64 => User.Claims.First(x => x.Type == NameIdentifierSchema).Value.Replace(SteamOpenIdUri, string.Empty);
 
@@ -29,6 +29,8 @@ namespace SteamPortfolio.Controllers
                 return Unauthorized();
 
             var inventory = await _inventoryRepository.GetInventoryAsync(SteamId64);
+            //TODO
+            inventory.Prices = null!;
 
             if (inventory != null)
                 return Ok(inventory);

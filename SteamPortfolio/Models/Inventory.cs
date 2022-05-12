@@ -11,8 +11,6 @@ namespace SteamPortfolio.Models
         public const string TotalSpentPropertyName = "spent";
         public const string TotalEarnedPropertyName = "earned";
 
-        private readonly List<Item> _items;
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [JsonIgnore]
@@ -31,10 +29,7 @@ namespace SteamPortfolio.Models
         [BsonElement(TotalEarnedPropertyName)]
         public decimal TotalEarned { get; set; }
 
-        public bool AddItem(Item item)
-        {
-            _items.Add(item);
-            return true;
-        }
+        [BsonIgnore]
+        public Dictionary<string, decimal> Prices { get; set; }
     }
 }

@@ -6,16 +6,20 @@ namespace SteamPortfolio.Models
 {
     public class Item
     {
-        [BsonElement("amount")]
-        [JsonPropertyName("amount")]
+        public const string AmountPropertyName = "amount";
+        public const string TotalSpentPropertyName = "total";
+        public const string MarketHashNamePropertyName = "market_hash_name";
+
+        [BsonElement(AmountPropertyName)]
+        [JsonPropertyName(AmountPropertyName)]
         public int Amount { get; set; }
 
-        [BsonElement("total")]
-        [JsonPropertyName("total")]
+        [BsonElement(TotalSpentPropertyName)]
+        [JsonPropertyName(TotalSpentPropertyName)]
         public decimal TotalSpent { get; set; }
 
-        [BsonElement("market_hash_name")]
-        [JsonPropertyName("market_hash_name")]
+        [BsonElement(MarketHashNamePropertyName)]
+        [JsonPropertyName(MarketHashNamePropertyName)]
         public string MarketHashName { get; set; } = null!;
     }
 }

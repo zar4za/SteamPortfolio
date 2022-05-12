@@ -6,6 +6,11 @@ namespace SteamPortfolio.Models
 {
     public class Inventory
     {
+        public const string SteamId64PropertyName = "steam_id";
+        public const string ItemsPropertyName = "items";
+        public const string TotalSpentPropertyName = "spent";
+        public const string TotalEarnedPropertyName = "earned";
+
         private readonly List<Item> _items;
 
         [BsonId]
@@ -13,17 +18,17 @@ namespace SteamPortfolio.Models
         [JsonIgnore]
         public string Id { get; set; }
 
-        [BsonElement("steam_id")]
+        [BsonElement(SteamId64PropertyName)]
         [JsonIgnore]
         public string SteamId64 { get; set; }
 
-        [BsonElement("items")]
+        [BsonElement(ItemsPropertyName)]
         public IEnumerable<Item> Items { get; set; }
 
-        [BsonElement("spent")]
+        [BsonElement(TotalSpentPropertyName)]
         public decimal TotalSpent { get; set; }
 
-        [BsonElement("earned")]
+        [BsonElement(TotalEarnedPropertyName)]
         public decimal TotalEarned { get; set; }
 
         public bool AddItem(Item item)

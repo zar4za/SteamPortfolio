@@ -18,8 +18,8 @@ namespace SteamPortfolio.Services
 
         public async Task<bool> AddItemAsync(string steamId64, Item item)
         {
-            var filter = Builders<Inventory>.Filter.Eq("steam_id", steamId64);
-            var update = Builders<Inventory>.Update.AddToSet("items", item);
+            var filter = Builders<Inventory>.Filter.Eq(Inventory.SteamId64PropertyName, steamId64);
+            var update = Builders<Inventory>.Update.AddToSet(Inventory.ItemsPropertyName, item);
             return await TryUpdateOneAsync(filter, update);
         }
 
@@ -43,18 +43,18 @@ namespace SteamPortfolio.Services
 
         public async Task<bool> RemoveItemAsync(string steamId64, Item item)
         {
-            var filter = Builders<Inventory>.Filter.Eq("steam_id", steamId64);
-            var update = Builders<Inventory>.Update.Pull("items", item);
+            var filter = Builders<Inventory>.Filter.Eq(Inventory.SteamId64PropertyName, steamId64);
+            var update = Builders<Inventory>.Update.Pull(Inventory.ItemsPropertyName, item);
             return await TryUpdateOneAsync(filter, update);
         }
 
         public async Task<bool> UpdateItemAsync(string steamId64, Item item)
         {
             var filter = Builders<Inventory>.Filter.And(new[] {
-                Builders<Inventory>.Filter.Eq("steam_id", steamId64),
-                Builders<Inventory>.Filter.Eq("items.market_hash_name", item.MarketHashName)
+                Builders<Inventory>.Filter.Eq(Inventory.SteamId64PropertyName, steamId64),
+                Builders<Inventory>.Filter.Eq($"{Inventory.ItemsPropertyName}.{Item.MarketHashNamePropertyName}", item.MarketHashName)
             });
-            var update = Builders<Inventory>.Update.Set("items.$", item);
+            var update = Builders<Inventory>.Update.Set($"{Inventory.ItemsPropertyName}.$", item);
             return await TryUpdateOneAsync(filter, update);
         }
 

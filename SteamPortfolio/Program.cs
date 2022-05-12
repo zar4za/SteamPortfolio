@@ -20,6 +20,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<MongoDbRepositorySettings>(builder.Configuration.GetSection("MongoDbRepository"));
 builder.Services.AddSingleton<IInventoryRepository, MongoDbRepository>();
+builder.Services.AddSingleton<IMarketHashNameProvider, MockMarketHashNameProvider>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

@@ -4,23 +4,24 @@ using SteamPortfolio.Services;
 
 namespace SteamPortfolio.Controllers
 {
-    [Route("api/v1/inventory")]
     [ApiController]
+    [Route("api/v1/inventory")]
     public class InventoryController : ControllerBase
     {
         private const string NameIdentifierSchema = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
         private const string SteamOpenIdUri = "https://steamcommunity.com/openid/id/";
 
         private IInventoryRepository _inventoryRepository;
+        private IMarketHashNameProvider _marketHashNameProvider;
 
         private string SteamId64 => User.Claims.First(x => x.Type == NameIdentifierSchema).Value.Replace(SteamOpenIdUri, string.Empty);
 
-        public InventoryController(IInventoryRepository inventoryRepository)
+        public InventoryController(IInventoryRepository inventoryRepository, IMarketHashNameProvider marketHashNameProvider)
         {
             _inventoryRepository = inventoryRepository;
+            _marketHashNameProvider = marketHashNameProvider;
         }
 
-        // GET: api/inventory
         [HttpGet]
         public async Task<IActionResult> GetInventoryAsync()
         {
@@ -31,7 +32,7 @@ namespace SteamPortfolio.Controllers
 
             if (inventory != null)
                 return Ok(inventory);
-
+            
             return BadRequest();
         }
 
@@ -47,6 +48,8 @@ namespace SteamPortfolio.Controllers
         {
             if (User?.Identity?.IsAuthenticated == false)
                 return Unauthorized();
+            if (_marketHashNameProvider.ValidateName(item.MarketHashName) == false)
+                return BadRequest();
 
             var success = await _inventoryRepository.AddItemAsync(SteamId64, item);
 

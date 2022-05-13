@@ -9,11 +9,11 @@ namespace SteamPortfolio.Services
     {
         private readonly IMongoCollection<Inventory> _inventoryCollection;
 
-        public MongoDbRepository(IOptions<MongoDbRepositorySettings> bookStoreDatabaseSettings)
+        public MongoDbRepository(IOptions<MongoDbRepositorySettings> MongoDbDatabaseSettings)
         {
-            var mongoClient = new MongoClient(bookStoreDatabaseSettings.Value.ConnectionString);
-            var mongoDatabase = mongoClient.GetDatabase(bookStoreDatabaseSettings.Value.DatabaseName);
-            _inventoryCollection = mongoDatabase.GetCollection<Inventory>(bookStoreDatabaseSettings.Value.UserCollectionName);
+            var mongoClient = new MongoClient(MongoDbDatabaseSettings.Value.ConnectionString);
+            var mongoDatabase = mongoClient.GetDatabase(MongoDbDatabaseSettings.Value.DatabaseName);
+            _inventoryCollection = mongoDatabase.GetCollection<Inventory>(MongoDbDatabaseSettings.Value.UserCollectionName);
         }
 
         public async Task<bool> AddItemAsync(string steamId64, Item item)

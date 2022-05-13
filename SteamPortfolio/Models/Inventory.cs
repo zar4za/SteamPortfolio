@@ -24,9 +24,11 @@ namespace SteamPortfolio.Models
         public IEnumerable<Item> Items { get; set; }
 
         [BsonElement(TotalSpentPropertyName)]
+        [JsonPropertyName(TotalSpentPropertyName)]
         public decimal TotalSpent { get; set; }
 
         [BsonElement(TotalEarnedPropertyName)]
+        [JsonPropertyName(TotalEarnedPropertyName)]
         public decimal TotalEarned { get; set; }
 
         [BsonIgnore]

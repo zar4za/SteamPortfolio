@@ -7,7 +7,5 @@
         public string DatabaseName { get; set; } = null!;
 
         public string UserCollectionName { get; set; } = null!;
-
-        public string PricesCollectionName { get; set; } = null!;
     }
 }

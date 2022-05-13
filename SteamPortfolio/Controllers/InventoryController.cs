@@ -2,6 +2,7 @@
 using SteamPortfolio.Models;
 using SteamPortfolio.Services;
 using SteamPortfolio.Extensions;
+using SteamPortfolio.Steam;
 
 namespace SteamPortfolio.Controllers
 {
@@ -11,11 +12,13 @@ namespace SteamPortfolio.Controllers
     {
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IMarketHashNameProvider _marketHashNameProvider;
+        private readonly IPriceProvider _priceProvider;
 
-        public InventoryController(IInventoryRepository inventoryRepository, IMarketHashNameProvider marketHashNameProvider)
+        public InventoryController(IInventoryRepository inventoryRepository, IMarketHashNameProvider marketHashNameProvider, IPriceProvider priceProvider)
         {
             _inventoryRepository = inventoryRepository;
             _marketHashNameProvider = marketHashNameProvider;
+            _priceProvider = priceProvider;
         }
 
         [HttpGet]
@@ -25,8 +28,8 @@ namespace SteamPortfolio.Controllers
                 return Unauthorized();
 
             var inventory = await _inventoryRepository.GetInventoryAsync(User!.GetSteamId64()!);
-            //TODO
-            inventory.Prices = null!;
+
+            inventory.Prices = await _priceProvider.GetSteamPrices(inventory.Items.Select(x => x.MarketHashName));
 
             if (inventory != null)
                 return Ok(inventory);

@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddSteam(options =>
 {
-    options.ApplicationKey = "7B27A6889F463A40D55C992FE5045C7B";
+    options.ApplicationKey = "CHANGEHERE";
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();

@@ -14,14 +14,14 @@ namespace SteamPortfolio.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [JsonIgnore]
-        public string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         [BsonElement(SteamId64PropertyName)]
         [JsonIgnore]
-        public string SteamId64 { get; set; }
+        public string SteamId64 { get; set; } = null!;
 
         [BsonElement(ItemsPropertyName)]
-        public IEnumerable<Item> Items { get; set; }
+        public IEnumerable<Item> Items { get; set; } = null!;
 
         [BsonElement(TotalSpentPropertyName)]
         [JsonPropertyName(TotalSpentPropertyName)]
@@ -32,6 +32,6 @@ namespace SteamPortfolio.Models
         public decimal TotalEarned { get; set; }
 
         [BsonIgnore]
-        public Dictionary<string, decimal> Prices { get; set; }
+        public Dictionary<string, decimal> Prices { get; set; } = null!;
     }
 }

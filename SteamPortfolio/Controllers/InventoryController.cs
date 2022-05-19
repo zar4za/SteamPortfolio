@@ -31,11 +31,11 @@ namespace SteamPortfolio.Controllers
 
             var inventory = await _inventoryRepository.GetInventoryAsync(User!.GetSteamId64()!);
 
-            inventory.Prices = await _priceProvider.GetSteamPrices(inventory.Items.Select(x => x.MarketHashName));
-
             if (inventory != null)
+            {
+                inventory.Prices = await _priceProvider.GetSteamPrices(inventory.Items.Select(x => x.MarketHashName));
                 return Ok(inventory);
-            
+            }
             return BadRequest();
         }
 

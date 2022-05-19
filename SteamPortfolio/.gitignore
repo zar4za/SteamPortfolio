@@ -11,7 +11,7 @@
 *.userprefs
 
 # App settings
-*/appsettings.json
+SteamPortfolio/appsettings.json
 
 # Build results
 [Dd]ebug/

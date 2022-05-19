@@ -34,7 +34,7 @@ namespace SteamPortfolio.Services.InventoryRepository
             return inventory;
         }
 
-        public async Task<Inventory?> GetInventoryAsync(string steamId64)
+        public async Task<Inventory> GetInventoryAsync(string steamId64)
         {
             var cursor = await FindInventoryAsync(steamId64);
             var inventory = await cursor.FirstOrDefaultAsync();

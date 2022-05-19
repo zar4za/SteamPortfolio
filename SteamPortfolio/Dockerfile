@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["SteamPortfolio/SteamPortfolio.csproj", "SteamPortfolio/"]
-RUN dotnet restore "SteamPortfolio/SteamPortfolio.csproj"
+COPY ["SteamPortfolio.csproj", "."]
+RUN dotnet restore "./SteamPortfolio.csproj"
 COPY . .
-WORKDIR "/src/SteamPortfolio"
+WORKDIR "/src/."
 RUN dotnet build "SteamPortfolio.csproj" -c Release -o /app/build
 
 FROM build AS publish

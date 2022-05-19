@@ -1,4 +1,3 @@
-using AspNet.Security.OpenId.Steam;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SteamPortfolio.Models;
 using SteamPortfolio.Services.InventoryRepository;
@@ -11,8 +10,8 @@ builder.Services.AddAuthentication(options =>
 })
 .AddCookie(options =>
 {
-    options.LoginPath = "/login";
-    options.LogoutPath = "/signout";
+    options.LoginPath = "/signin";
+    options.LogoutPath = "/logout";
 })
 .AddSteam(options =>
 {
@@ -27,7 +26,12 @@ builder.Services.AddSingleton<IPriceProvider, SkinportParser>();
 builder.Services.AddSingleton<IMarketHashNameProvider, SkinportParser>();
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
 {
     app.UseHsts();
 }
@@ -40,6 +44,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapFallbackToFile("index.html"); ;
-app.UseSwagger();
-app.UseSwaggerUI();
 app.Run();

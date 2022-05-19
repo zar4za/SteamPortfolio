@@ -1,4 +1,4 @@
-﻿namespace SteamPortfolio.Services
+﻿namespace SteamPortfolio.Services.Market
 {
     public class MockMarketHashNameProvider : IMarketHashNameProvider
     {

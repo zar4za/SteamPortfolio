@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SteamPortfolio.Extensions;
-using SteamPortfolio.Services;
+using SteamPortfolio.Services.InventoryRepository;
 
 namespace SteamPortfolio.Controllers
 {
@@ -30,10 +30,10 @@ namespace SteamPortfolio.Controllers
         {
             var properties = new AuthenticationProperties
             {
-                RedirectUri = redirectUri ?? DefaultRedirectUri
+                RedirectUri = redirectUri ?? DefaultRedirectUri,
             };
 
-            return SignOut(properties, CookieAuthenticationDefaults.AuthenticationScheme);
+            return SignOut(properties);
         }
 
         [HttpGet("/signin")]
@@ -42,10 +42,9 @@ namespace SteamPortfolio.Controllers
             var properties = new AuthenticationProperties
             {
                 RedirectUri = redirectUri ?? DefaultRedirectUri,
-                IsPersistent = true,
-                
+                IsPersistent = true
             };
-
+            
             var challengeResult = Challenge(properties, OpenIdProvider);
             UserSignedIn?.Invoke(User!.GetSteamId64()!);
             return Challenge(properties, OpenIdProvider);

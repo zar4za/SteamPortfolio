@@ -1,7 +1,8 @@
+using AspNet.Security.OpenId.Steam;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SteamPortfolio.Models;
-using SteamPortfolio.Services;
-using SteamPortfolio.Steam;
+using SteamPortfolio.Services.InventoryRepository;
+using SteamPortfolio.Services.Market;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(options =>
@@ -15,7 +16,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddSteam(options =>
 {
-    options.ApplicationKey = "CHANGEME";
+    options.ApplicationKey = builder.Configuration["SteamApiKey"];
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();

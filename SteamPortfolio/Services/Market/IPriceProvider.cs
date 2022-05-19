@@ -1,4 +1,4 @@
-﻿namespace SteamPortfolio.Steam
+﻿namespace SteamPortfolio.Services.Market
 {
     public interface IPriceProvider
     {

@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using SteamPortfolio.Models;
 
-namespace SteamPortfolio.Services
+namespace SteamPortfolio.Services.InventoryRepository
 {
     public class MongoDbRepository : IInventoryRepository
     {

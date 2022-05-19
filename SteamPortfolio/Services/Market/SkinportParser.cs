@@ -1,7 +1,6 @@
-﻿using SteamPortfolio.Services;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 
-namespace SteamPortfolio.Steam
+namespace SteamPortfolio.Services.Market
 {
     public class SkinportParser : IPriceProvider, IMarketHashNameProvider
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SteamPortfolio.Models;
-using SteamPortfolio.Services;
 using SteamPortfolio.Extensions;
-using SteamPortfolio.Steam;
+using SteamPortfolio.Services.Market;
+using SteamPortfolio.Services.InventoryRepository;
 
 namespace SteamPortfolio.Controllers
 {

@@ -11,7 +11,8 @@ const context =  [
     "/identity",
     "/swagger",
     "/api/v1/inventory/add-item",
-    "/api/v1/inventory"
+    "/api/v1/inventory",
+    "/logout"
 ];
 
 module.exports = function(app) {

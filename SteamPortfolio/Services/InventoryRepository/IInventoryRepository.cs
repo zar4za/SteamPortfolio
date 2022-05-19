@@ -1,6 +1,6 @@
 ﻿using SteamPortfolio.Models;
 
-namespace SteamPortfolio.Services
+namespace SteamPortfolio.Services.InventoryRepository
 {
     public interface IInventoryRepository
     {

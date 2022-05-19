@@ -44,7 +44,7 @@ namespace SteamPortfolio.Controllers
                 RedirectUri = redirectUri ?? DefaultRedirectUri,
                 IsPersistent = true
             };
-            
+
             var challengeResult = Challenge(properties, OpenIdProvider);
             UserSignedIn?.Invoke(User!.GetSteamId64()!);
             return Challenge(properties, OpenIdProvider);

@@ -14,7 +14,9 @@ namespace SteamPortfolio.Controllers
         private readonly IMarketHashNameProvider _marketHashNameProvider;
         private readonly IPriceProvider _priceProvider;
 
-        public InventoryController(IInventoryRepository inventoryRepository, IMarketHashNameProvider marketHashNameProvider, IPriceProvider priceProvider)
+        public InventoryController(IInventoryRepository inventoryRepository,
+            IMarketHashNameProvider marketHashNameProvider,
+            IPriceProvider priceProvider)
         {
             _inventoryRepository = inventoryRepository;
             _marketHashNameProvider = marketHashNameProvider;
